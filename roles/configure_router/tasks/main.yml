@@ -1,0 +1,8 @@
+---
+
+- name: Configure hostname for Cisco device
+  roles:
+    - set_hostname
+    - config_interfaces
+    - config_ntp
+    

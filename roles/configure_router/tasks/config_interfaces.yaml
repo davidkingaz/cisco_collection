@@ -1,0 +1,33 @@
+---
+
+- name: Configure IOS interface description
+  cisco.ios.ios_interfaces:
+    config:
+      - name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        enabled: true
+    state: merged
+  loop: "{{ interfaces }}"
+  ignore_errors: true
+  register: description_result
+
+- name: Configure IOS interface IP address
+  cisco.ios.ios_l3_interfaces:
+    config:
+      - name: "{{ item.name }}"
+        ipv4:
+          - address: "{{ item.ip }}"
+    state: merged
+  loop: "{{ interfaces }}"
+  ignore_errors: true
+  register: interfaceip_result
+
+- name: Check for any errors
+  ansible.builtin.debug:
+    var: description_result
+  when: description_result is failed
+
+- name: Check for any errors
+  ansible.builtin.debug:
+    var: interfaceip_result
+  when: interfaceip_result is failed

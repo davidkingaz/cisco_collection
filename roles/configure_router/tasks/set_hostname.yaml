@@ -1,0 +1,7 @@
+---
+# This role is used to configure the hostname for Cisco device
+- name: Configure the hostname for Cisco device
+  cisco.ios.ios_hostname:
+    config:
+      hostname: "{{ device_hostname }}"
+    state: merged
